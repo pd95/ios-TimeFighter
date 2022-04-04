@@ -25,6 +25,7 @@ struct ContentView: View {
     @State private var timeLeft = Timer.initialCountDown
     @State private var timerCancellable: Cancellable?
 
+    @State private var scoreOpacity = 1.0
     @State private var buttonScale = 1.0
 
     @State private var showTimeIsUpAlert = false
@@ -38,6 +39,7 @@ struct ContentView: View {
                 VStack {
                     HStack {
                         Text("Your score: \(score)")
+                            .opacity(scoreOpacity)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         Text("Time Left: \(timeLeft)")
                     }
@@ -119,10 +121,18 @@ struct ContentView: View {
         if !gameStarted {
             startGame()
         }
-        withAnimation {
-            score += 1
+
+        score += 1
+
+        // Animate score blinking
+        withAnimation(.easeOut(duration: 0.2)) {
+            scoreOpacity = 0.0
+        }
+        withAnimation(.easeOut(duration: 0.2).delay(0.2)) {
+            scoreOpacity = 1
         }
 
+        // Animate button scaling
         let duration = 0.20
         let springAnimation = Animation.interpolatingSpring(stiffness: 500, damping: 10)
         withAnimation(springAnimation) {
