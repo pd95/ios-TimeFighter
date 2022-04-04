@@ -8,14 +8,21 @@
 import SwiftUI
 import Combine
 
+extension Timer {
+    static var countDownTimer: Publishers.Autoconnect<Timer.TimerPublisher> = {
+        Timer.publish(every: countDownInterval, on: .main, in: .common).autoconnect()
+    }()
+    static let initialCountDown = 3
+    static let countDownInterval: TimeInterval = 1
+}
+
 struct ContentView: View {
 
-    private let initialCountDown = 3
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-
     @State private var score = 0
+
     @State private var gameStarted = false
-    @State private var timeLeft = 60
+
+    @State private var timeLeft = Timer.initialCountDown
     @State private var timerCancellable: Cancellable?
 
     @State private var showTimeIsUpAlert = false
@@ -90,11 +97,11 @@ struct ContentView: View {
 
     private func resetGame() {
         score = 0
-        timeLeft = initialCountDown
+        timeLeft = Timer.initialCountDown
     }
 
     private func startGame() {
-        timerCancellable = timer.sink(receiveValue: decrementTimeLeft)
+        timerCancellable = Timer.countDownTimer.sink(receiveValue: decrementTimeLeft)
         gameStarted = true
     }
 
