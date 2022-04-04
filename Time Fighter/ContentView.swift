@@ -25,6 +25,8 @@ struct ContentView: View {
     @State private var timeLeft = Timer.initialCountDown
     @State private var timerCancellable: Cancellable?
 
+    @State private var buttonScale = 1.0
+
     @State private var showTimeIsUpAlert = false
     @State private var showInfoAlert = false
 
@@ -51,6 +53,8 @@ struct ContentView: View {
                                     .shadow(radius: 1)
                             )
                     }
+                    .buttonStyle(.plain)
+                    .scaleEffect(buttonScale)
                     Spacer()
                 }
                 .padding()
@@ -117,6 +121,15 @@ struct ContentView: View {
         }
         withAnimation {
             score += 1
+        }
+
+        let duration = 0.20
+        let springAnimation = Animation.interpolatingSpring(stiffness: 500, damping: 10)
+        withAnimation(springAnimation) {
+            buttonScale = 2.0
+        }
+        withAnimation(springAnimation.delay(duration)) {
+            buttonScale = 1.0
         }
     }
 
