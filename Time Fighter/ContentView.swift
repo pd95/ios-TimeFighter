@@ -126,15 +126,15 @@ struct ContentView: View {
         score += 1
 
         // Animate score blinking
-        withAnimation(.easeOut(duration: 0.2)) {
+        let duration = 0.20
+        withAnimation(.easeOut(duration: duration)) {
             scoreOpacity = 0.0
         }
-        withAnimation(.easeOut(duration: 0.2).delay(0.2)) {
+        withAnimation(.easeOut(duration: duration).delay(duration)) {
             scoreOpacity = 1
         }
 
         // Animate button scaling
-        let duration = 0.20
         let springAnimation = Animation.interpolatingSpring(stiffness: 500, damping: 10)
         withAnimation(springAnimation) {
             buttonScale = 2.0
