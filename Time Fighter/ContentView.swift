@@ -12,7 +12,7 @@ extension Timer {
     static var countDownTimer: Publishers.Autoconnect<Timer.TimerPublisher> = {
         Timer.publish(every: countDownInterval, on: .main, in: .common).autoconnect()
     }()
-    static let initialCountDown = 3
+    static let initialCountDown = 15
     static let countDownInterval: TimeInterval = 1
 }
 
@@ -35,6 +35,7 @@ struct ContentView: View {
         NavigationView {
             ZStack {
                 Color("backgroundColor")
+                    .edgesIgnoringSafeArea(.horizontal)
 
                 VStack {
                     HStack {
