@@ -43,11 +43,11 @@ struct ContentView: View {
                                     .foregroundColor(Color("buttonColor"))
                                     .shadow(radius: 1)
                             )
-                            .foregroundColor(.black)
                     }
                     Spacer()
                 }
                 .padding()
+                .foregroundColor(.black)
                 .alert("Time's up!", isPresented: $showTimeIsUpAlert, actions: {
                     Button("OK") {
                         resetGame()
@@ -60,18 +60,27 @@ struct ContentView: View {
                 }, message: {
                     Text("Created by The Mighty Swift Developer")
                 })
-                .toolbar {
+            }
+            .toolbar {
+                ToolbarItemGroup(placement: .navigation) {
+                    Text("Time Fighter")
+                        .font(.title.bold())
+                        .foregroundColor(.white)
+                }
+                ToolbarItemGroup {
                     Button {
                         showInfoAlert.toggle()
                     } label: {
                         Label("Info", systemImage: "info.circle.fill")
-                            .font(.title)
-                            .imageScale(.large)
+                            .font(.title2)
+                            .foregroundColor(.white)
                     }
                     .buttonStyle(.borderless)
                 }
             }
-            .navigationTitle("Time Fighter")
+            .background(Color("primaryColor"))
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("")
         }
         .onAppear(perform: resetGame)
         .navigationViewStyle(.stack)
@@ -115,5 +124,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environment(\.colorScheme, .dark)
     }
 }
